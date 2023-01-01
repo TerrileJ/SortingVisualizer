@@ -26,11 +26,25 @@ function renderArray(array) {
   }
 }
 
+function clear() {
+  while (barContainer.firstChild) {
+    barContainer.removeChild(barContainer.firstChild);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  genArray();
+  renderArray(bar_arr);
+});
+
+genBtn.addEventListener("click", function () {
+  clear();
   genArray();
   renderArray(bar_arr);
 });
 /**
  * 1. Specify a range of values for my array
  * 2. Make function to create an array of random values
+ * 3. generate random bars upon page loading
+ * 4. have btn randomly generate new array on click
  */
