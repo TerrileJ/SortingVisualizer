@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="css/style.css" type="text/css" rel="stylesheet" />
+    <script src="js/main.js" defer></script>
     <title>Sort Visualizer</title>
   </head>
   <body>
@@ -15,17 +16,12 @@
     </header>
 
     <section class="visualizer">
-      <div class="bars_container">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </div>
+      <div id="bars_container"></div>
 
-      <a href="#" class="btn btn-lg">Generate Array</a>
+      <div class="button_container">
+        <a href="#" id="genBtn" class="btn btn-lg">Generate Array</a>
+        <a href="#" id="sortBtn" class="btn btn-lg">Sort</a>
+      </div>
     </section>
   </body>
 </html>
