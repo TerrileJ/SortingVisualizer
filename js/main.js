@@ -1,7 +1,9 @@
 let sortBtn = document.getElementById("sortBtn");
 let genBtn = document.getElementById("genBtn");
 let barContainer = document.getElementById("bars_container");
+let sortMethodLinks = document.querySelectorAll(".nav-links");
 
+/* bar generation */
 let min = 1;
 let max = 200;
 let numBars = 5;
@@ -32,6 +34,7 @@ function clear() {
   }
 }
 
+/* sort methods */
 function basic_sort(array) {
   array.sort(function (a, b) {
     return a - b;
@@ -75,6 +78,39 @@ async function bubble_sort(array) {
   bars[0].style.backgroundColor = "lightgreen";
 }
 
+async function merge_sort(array) {
+  clear();
+}
+
+/* rendering */
+let sort = bubble_sort;
+function selectSort(e) {
+  // remove border from any existing elements
+  sortMethodLinks.forEach((item) => {
+    item.classList.remove("select-border");
+  });
+
+  // add border to link that got clicked
+  this.classList.add("select-border");
+
+  // assign the correct sort function
+  switch (this.textContent) {
+    case "MergeSort":
+      sort = merge_sort;
+      break;
+    case "QuickSort":
+      break;
+    case "HeapSort":
+      break;
+    default:
+      sort = bubble_sort;
+  }
+}
+
+sortMethodLinks.forEach((item) => {
+  item.addEventListener("click", selectSort);
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   genArray();
   renderArray(bar_arr);
@@ -87,13 +123,5 @@ genBtn.addEventListener("click", function () {
 });
 
 sortBtn.addEventListener("click", function () {
-  bubble_sort(bar_arr);
+  sort(bar_arr);
 });
-
-/**
- * 1. Specify a range of values for my array
- * 2. Make function to create an array of random values
- * 3. generate random bars upon page loading
- * 4. have btn randomly generate new array on click
- * 5. sort animation
- */
