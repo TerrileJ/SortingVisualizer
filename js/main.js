@@ -45,7 +45,7 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function bubble_sort(array) {
+async function bubble_sort(array, l, r) {
   let bars = document.getElementsByClassName("bar");
   for (let i = 0; i < array.length - 1; i++) {
     for (let j = 0; j < array.length - i - 1; j++) {
@@ -78,8 +78,61 @@ async function bubble_sort(array) {
   bars[0].style.backgroundColor = "lightgreen";
 }
 
-async function merge_sort(array) {
-  clear();
+async function merge_sort(array, l, r) {
+  // split into halves and merge
+  if (l < r) {
+    let m = Math.floor((r - l) / 2) + l;
+    // console.log("L is " + l);
+    // console.log("R is " + r);
+    // console.log("M is " + m);
+
+    merge_sort(array, l, m);
+    merge_sort(array, m + 1, r);
+
+    merge(array, l, m, r);
+  }
+}
+
+async function merge(array, l, m, r) {
+  // create half arrays
+  let subArrayOne = new Array(m - l + 1);
+  let subArrayTwo = new Array(r - m);
+
+  for (let i = 0; i < subArrayOne.length; i++) {
+    subArrayOne[i] = array[l + i];
+  }
+
+  for (let i = 0; i < subArrayTwo.length; i++) {
+    subArrayTwo[i] = array[m + 1 + i];
+  }
+
+  let ptrOne = 0;
+  let ptrTwo = 0;
+
+  // compare values in each half, and then assign smallest to pos in original array
+  while (ptrOne < subArrayOne.length && ptrTwo < subArrayTwo.length) {
+    if (subArrayOne[ptrOne] < subArrayTwo[ptrTwo]) {
+      array[l] = subArrayOne[ptrOne];
+      ptrOne++;
+    } else {
+      array[l] = subArrayTwo[ptrTwo];
+      ptrTwo++;
+    }
+    l++;
+  }
+
+  // assign any remainder values
+  while (ptrOne < subArrayOne.length) {
+    array[l] = subArrayOne[ptrOne];
+    l++;
+    ptrOne++;
+  }
+
+  while (ptrTwo < subArrayTwo.length) {
+    array[l] = subArrayTwo[ptrTwo];
+    l++;
+    ptrTwo++;
+  }
 }
 
 /* rendering */
@@ -123,5 +176,5 @@ genBtn.addEventListener("click", function () {
 });
 
 sortBtn.addEventListener("click", function () {
-  sort(bar_arr);
+  sort(bar_arr, 0, bar_arr.length - 1);
 });
