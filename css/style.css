@@ -23,12 +23,13 @@ a {
 
 .navbar {
   display: grid;
-  grid-template-columns: auto 1fr 300px;
+  grid-template-columns: auto 1fr 0.5fr 0.5fr;
   align-items: center;
   height: 80px;
   width: 90%;
   max-width: 1720px;
   margin: 0 auto;
+  padding-right: 100px;
 }
 
 .nav-menu {
@@ -36,7 +37,7 @@ a {
   grid-template-columns: repeat(4, auto);
   list-style: none;
   text-align: center;
-  width: 50%;
+  width: 70%;
   justify-self: start;
 }
 
@@ -54,15 +55,13 @@ a {
   border-bottom: white 2px solid;
 }
 
-.slide-container {
+.slide-container,
+.speed-container {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* background-color: white; */
-}
-
-#bar-slider-label {
   color: white;
+  padding-left: 20px;
 }
 
 .slider {

@@ -2,13 +2,15 @@ let sortBtn = document.getElementById("sortBtn");
 let genBtn = document.getElementById("genBtn");
 let barContainer = document.getElementById("bars_container");
 let sortMethodLinks = document.querySelectorAll(".nav-links");
-let slider = document.getElementById("bar-range");
+let bar_slider = document.getElementById("bar-range");
+let speed_slider = document.getElementById("speed-range");
 
 /* bar generation */
 let min = 1;
 let max = 200;
-let numBars = slider.value;
+let numBars = bar_slider.value;
 let bar_arr = new Array(numBars);
+let speed = speed_slider.value / 10.0;
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -68,12 +70,16 @@ document.addEventListener("DOMContentLoaded", function () {
   renderArray(bar_arr);
 });
 
-slider.oninput = function () {
+bar_slider.oninput = function () {
   numBars = this.value;
   bar_arr = new Array(numBars);
   clear();
   genArray();
   renderArray(bar_arr);
+};
+
+speed_slider.oninput = function () {
+  speed = this.value / 10.0;
 };
 
 genBtn.addEventListener("click", function () {
@@ -104,25 +110,25 @@ async function bubble_sort(array, l, r) {
       // bars currently compared
       bars[j].style.backgroundColor = "#203354";
       bars[j + 1].style.backgroundColor = "#203354";
-      await sleep(500);
+      await sleep(500 / speed);
 
       // bars not in correct order
       if (array[j] > array[j + 1]) {
         bars[j].style.backgroundColor = "red";
         bars[j + 1].style.backgroundColor = "red";
-        await sleep(100);
+        await sleep(100 / speed);
         temp = array[j];
         array[j] = array[j + 1];
         array[j + 1] = temp;
         bars[j].style.height = array[j] + "px";
         bars[j + 1].style.height = array[j + 1] + "px";
-        await sleep(500);
+        await sleep(500 / speed);
       }
 
       // bar color reset
       bars[j].style.backgroundColor = "#b0bbc0";
       bars[j + 1].style.backgroundColor = "#b0bbc0";
-      await sleep(100);
+      await sleep(100 / speed);
     }
     // sorted bar set to green
     bars[array.length - i - 1].style.backgroundColor = "lightgreen";
@@ -145,7 +151,7 @@ async function merge_sort(array, l, r) {
   }
 }
 
-async function merge(array, l, m, r) {
+async function merge(array, l, m, r, speed) {
   // create half arrays
   let subArrayOne = new Array(m - l + 1);
   let subArrayTwo = new Array(r - m);
