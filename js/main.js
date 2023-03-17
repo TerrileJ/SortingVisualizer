@@ -2,11 +2,12 @@ let sortBtn = document.getElementById("sortBtn");
 let genBtn = document.getElementById("genBtn");
 let barContainer = document.getElementById("bars_container");
 let sortMethodLinks = document.querySelectorAll(".nav-links");
+let slider = document.getElementById("bar-range");
 
 /* bar generation */
 let min = 1;
 let max = 200;
-let numBars = 5;
+let numBars = slider.value;
 let bar_arr = new Array(numBars);
 
 function randomNumber(min, max) {
@@ -33,6 +34,57 @@ function clear() {
     barContainer.removeChild(barContainer.firstChild);
   }
 }
+/* rendering */
+let sort = bubble_sort;
+function selectSort(e) {
+  // remove border from any existing elements
+  sortMethodLinks.forEach((item) => {
+    item.classList.remove("select-border");
+  });
+
+  // add border to link that got clicked
+  this.classList.add("select-border");
+
+  // assign the correct sort function
+  switch (this.textContent) {
+    case "MergeSort":
+      sort = merge_sort;
+      break;
+    case "QuickSort":
+      break;
+    case "HeapSort":
+      break;
+    default:
+      sort = bubble_sort;
+  }
+}
+
+sortMethodLinks.forEach((item) => {
+  item.addEventListener("click", selectSort);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  genArray();
+  renderArray(bar_arr);
+});
+
+slider.oninput = function () {
+  numBars = this.value;
+  bar_arr = new Array(numBars);
+  clear();
+  genArray();
+  renderArray(bar_arr);
+};
+
+genBtn.addEventListener("click", function () {
+  clear();
+  genArray();
+  renderArray(bar_arr);
+});
+
+sortBtn.addEventListener("click", function () {
+  sort(bar_arr, 0, bar_arr.length - 1);
+});
 
 /* sort methods */
 function basic_sort(array) {
@@ -134,47 +186,3 @@ async function merge(array, l, m, r) {
     ptrTwo++;
   }
 }
-
-/* rendering */
-let sort = bubble_sort;
-function selectSort(e) {
-  // remove border from any existing elements
-  sortMethodLinks.forEach((item) => {
-    item.classList.remove("select-border");
-  });
-
-  // add border to link that got clicked
-  this.classList.add("select-border");
-
-  // assign the correct sort function
-  switch (this.textContent) {
-    case "MergeSort":
-      sort = merge_sort;
-      break;
-    case "QuickSort":
-      break;
-    case "HeapSort":
-      break;
-    default:
-      sort = bubble_sort;
-  }
-}
-
-sortMethodLinks.forEach((item) => {
-  item.addEventListener("click", selectSort);
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  genArray();
-  renderArray(bar_arr);
-});
-
-genBtn.addEventListener("click", function () {
-  clear();
-  genArray();
-  renderArray(bar_arr);
-});
-
-sortBtn.addEventListener("click", function () {
-  sort(bar_arr, 0, bar_arr.length - 1);
-});
