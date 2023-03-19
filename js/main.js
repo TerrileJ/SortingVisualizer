@@ -11,6 +11,7 @@ let max = 200;
 let numBars = bar_slider.value;
 let bar_arr = new Array(numBars);
 let speed = speed_slider.value / 10.0;
+let sorting = false;
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -39,6 +40,7 @@ function clear() {
 /* rendering */
 let sort = bubble_sort;
 function selectSort(e) {
+  if (sorting) return;
   // remove border from any existing elements
   sortMethodLinks.forEach((item) => {
     item.classList.remove("select-border");
@@ -71,11 +73,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 bar_slider.oninput = function () {
-  numBars = this.value;
-  bar_arr = new Array(numBars);
-  clear();
-  genArray();
-  renderArray(bar_arr);
+  if (!sorting) {
+    numBars = this.value;
+    bar_arr = new Array(numBars);
+    clear();
+    genArray();
+    renderArray(bar_arr);
+  }
 };
 
 speed_slider.oninput = function () {
@@ -83,13 +87,17 @@ speed_slider.oninput = function () {
 };
 
 genBtn.addEventListener("click", function () {
-  clear();
-  genArray();
-  renderArray(bar_arr);
+  if (!sorting) {
+    clear();
+    genArray();
+    renderArray(bar_arr);
+  }
 });
 
 sortBtn.addEventListener("click", function () {
-  sort(bar_arr, 0, bar_arr.length - 1);
+  if (!sorting) {
+    sort(bar_arr, 0, bar_arr.length - 1);
+  }
 });
 
 /* sort methods */
@@ -104,6 +112,7 @@ function sleep(ms) {
 }
 
 async function bubble_sort(array, l, r) {
+  sorting = true;
   let bars = document.getElementsByClassName("bar");
   for (let i = 0; i < array.length - 1; i++) {
     for (let j = 0; j < array.length - i - 1; j++) {
@@ -134,6 +143,8 @@ async function bubble_sort(array, l, r) {
     bars[array.length - i - 1].style.backgroundColor = "lightgreen";
   }
   bars[0].style.backgroundColor = "lightgreen";
+
+  sorting = false;
 }
 
 async function merge_sort(array, l, r) {
