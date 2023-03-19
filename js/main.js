@@ -63,6 +63,22 @@ function selectSort(e) {
   }
 }
 
+function sort_freeze(condition) {
+  if (condition) {
+    genBtn.classList.add("disable");
+    sortBtn.classList.add("disable");
+    sortMethodLinks.forEach((item) => {
+      item.classList.add("disable");
+    });
+  } else {
+    genBtn.classList.remove("disable");
+    sortBtn.classList.remove("disable");
+    sortMethodLinks.forEach((item) => {
+      item.classList.remove("disable");
+    });
+  }
+}
+
 sortMethodLinks.forEach((item) => {
   item.addEventListener("click", selectSort);
 });
@@ -112,7 +128,11 @@ function sleep(ms) {
 }
 
 async function bubble_sort(array, l, r) {
+  // conditions for sort animation
   sorting = true;
+  sort_freeze(true);
+
+  // algorithm
   let bars = document.getElementsByClassName("bar");
   for (let i = 0; i < array.length - 1; i++) {
     for (let j = 0; j < array.length - i - 1; j++) {
@@ -144,7 +164,9 @@ async function bubble_sort(array, l, r) {
   }
   bars[0].style.backgroundColor = "lightgreen";
 
+  // reset sort conditions
   sorting = false;
+  sort_freeze(false);
 }
 
 async function merge_sort(array, l, r) {
