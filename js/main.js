@@ -99,7 +99,15 @@ genBtn.addEventListener("click", function () {
 
 sortBtn.addEventListener("click", function () {
   if (!sorting) {
-    sort(bar_arr, 0, bar_arr.length - 1);
+    // freeze other functionality
+    sorting = true;
+    sort_freeze(true);
+
+    // sort
+    sort(bar_arr, 0, bar_arr.length - 1).then(function (result) {
+      sorting = false;
+      sort_freeze(false);
+    });
   }
 });
 
@@ -121,21 +129,19 @@ function sort_freeze(condition) {
     sortMethodLinks.forEach((item) => {
       item.classList.add("disable");
     });
+    bar_slider.disabled = true;
   } else {
     genBtn.classList.remove("disable");
     sortBtn.classList.remove("disable");
     sortMethodLinks.forEach((item) => {
       item.classList.remove("disable");
     });
+    bar_slider.disabled = false;
   }
 }
 
 /** Bubble Sort */
 async function bubble_sort(array, l, r) {
-  // conditions for sort animation
-  sorting = true;
-  sort_freeze(true);
-
   // algorithm
   let bars = document.getElementsByClassName("bar");
   for (let i = 0; i < array.length - 1; i++) {
