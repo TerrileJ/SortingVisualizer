@@ -1,7 +1,8 @@
 import { sleep } from "./utility.js";
+import { speed } from "../main.js";
 
 /** Bubble Sort */
-export default async function bubble_sort(array, l, r, speed) {
+export default async function bubble_sort(array, l, r) {
   // algorithm
   let bars = document.getElementsByClassName("bar");
   for (let i = 0; i < array.length - 1; i++) {
