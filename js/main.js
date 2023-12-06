@@ -1,4 +1,5 @@
 import bubble_sort from "./modules/bubble-sort.js";
+import quick_sort from "./modules/quick-sort.js";
 import { merge_sort_recursive } from "./modules/merge-sort.js";
 
 let sortBtn = document.getElementById("sortBtn");
@@ -115,6 +116,7 @@ function selectSort(e) {
       sort = merge_sort_recursive;
       break;
     case "QuickSort":
+      sort = quick_sort;
       break;
     case "HeapSort":
       break;
