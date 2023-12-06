@@ -17,69 +17,7 @@ let bar_arr = new Array(numBars);
 export let speed = speed_slider.value / 10.0;
 let sorting = false;
 
-function genArray() {
-  for (let i = 0; i < numBars; i++) {
-    bar_arr[i] = randomNumber(min, max);
-  }
-}
-
-function randomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function renderArray(array) {
-  for (let i = 0; i < array.length; i++) {
-    let bar = document.createElement("div");
-    bar.classList.add("bar");
-    bar.style.height = `${array[i]}px`;
-    barContainer.appendChild(bar);
-  }
-}
-
-function clear() {
-  while (barContainer.firstChild) {
-    barContainer.removeChild(barContainer.firstChild);
-  }
-}
-
-/** Clears visualization area 2 of all bars */
-export function clear_container_extra() {
-  while (barContainerExtra.firstChild) {
-    barContainerExtra.removeChild(barContainerExtra.firstChild);
-  }
-}
-
-/* rendering */
-let sort = bubble_sort;
-function selectSort(e) {
-  if (sorting) return;
-
-  // remove border from any existing elements
-  sortMethodLinks.forEach((item) => {
-    item.classList.remove("select-border");
-  });
-
-  // add border to link that got clicked
-  this.classList.add("select-border");
-
-  // assign the correct sort function
-  switch (this.textContent) {
-    case "MergeSort":
-      sort = merge_sort_recursive;
-      break;
-    case "QuickSort":
-      break;
-    case "HeapSort":
-      break;
-    default:
-      sort = bubble_sort;
-  }
-}
-
-sortMethodLinks.forEach((item) => {
-  item.addEventListener("click", selectSort);
-});
-
+/** Event Listeners */
 document.addEventListener("DOMContentLoaded", function () {
   genArray();
   renderArray(bar_arr);
@@ -120,6 +58,70 @@ sortBtn.addEventListener("click", function () {
     });
   }
 });
+
+sortMethodLinks.forEach((item) => {
+  item.addEventListener("click", selectSort);
+});
+
+/** Visualization/Bar Creation */
+function genArray() {
+  for (let i = 0; i < numBars; i++) {
+    bar_arr[i] = randomNumber(min, max);
+  }
+}
+
+function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function renderArray(array) {
+  for (let i = 0; i < array.length; i++) {
+    let bar = document.createElement("div");
+    bar.classList.add("bar");
+    bar.style.height = `${array[i]}px`;
+    barContainer.appendChild(bar);
+  }
+}
+
+function clear() {
+  while (barContainer.firstChild) {
+    barContainer.removeChild(barContainer.firstChild);
+  }
+}
+
+/** Clears visualization area 2 of all bars */
+export function clear_container_extra() {
+  while (barContainerExtra.firstChild) {
+    barContainerExtra.removeChild(barContainerExtra.firstChild);
+  }
+}
+
+/* Pre-Sorting Functionality */
+let sort = bubble_sort;
+function selectSort(e) {
+  if (sorting) return;
+
+  // remove border from any existing elements
+  sortMethodLinks.forEach((item) => {
+    item.classList.remove("select-border");
+  });
+
+  // add border to link that got clicked
+  this.classList.add("select-border");
+
+  // assign the correct sort function
+  switch (this.textContent) {
+    case "MergeSort":
+      sort = merge_sort_recursive;
+      break;
+    case "QuickSort":
+      break;
+    case "HeapSort":
+      break;
+    default:
+      sort = bubble_sort;
+  }
+}
 
 function sort_freeze(condition) {
   if (condition) {
